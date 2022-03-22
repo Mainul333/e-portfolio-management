@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block content %}
+
+				
+                <div id="container_demo" >
+				
+                    <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
+
+                    <div id="wrapper">
+                        <div id="login" class="animate form">
+                            <form  action="{{ url_for('printPortfolio') }}" method="post" autocomplete="on"> 
+                                <h1>Portfolio Inquiry</h1> 
+
+
+
+                                <p> 
+                                    <label> Portfolio number</label>
+                                    <input name="pf_no" required="required" type="text" placeholder="eg. P202104-1" /> 
+                                </p>
+                                
+
+                                                             
+
+                                <p class="login button" style="text-align: center;"> 
+                                    <input type="submit" value="Search" /> 
+								</p>
+
+                            </form>
+                            <div style="text-align: center;">
+							{% if result.pf_no%}
+                            <p style="color:red"> Portfolio details </p>
+                            <div style="display: inline-block; text-align: left;color:#3355FF">
+
+                            <p style="color:black"> -------------------------------------------</p>
+							<span >pf_no: {{result.pf_no}}</span><br>
+							<span  >pf_name: {{result.pf_name}}</span><br>
+							<span >reg_dtime: {{result.reg_dtime}}</span><br>
+							<span >reg_name: {{result.reg_name}}</span><br>
+							<span >professor_name: {{result.professor_name}}</span><br>
+							<span style="width:300px; word-wrap:break-word; display:inline-block;"> professor_pk: {{result.professor_pk}}</span><br>
+							<span >score: {{result.score}}</span><br>
+							<span >pf_status: {{result.pf_status}}</span><br>
+							<a href="https://{{result.pf_url}}"><span style="width:300px; word-wrap:break-word; display:inline-block;text-decoration:none;color:#3355FF"> pf_url: {{result.pf_url}}</span></a><br>
+                            <p > -------------------------------------------</p><br>
+							{% elif result==0%}
+		                    <p style="color:red">No portfolio exists for this number</p><br>
+
+  		                    {% endif %}
+
+							</div>
+                        </div>
+                        </div>
+					 
+
+						
+                    </div>
+                </div>  
+  
+        </div>
+{% endblock %}

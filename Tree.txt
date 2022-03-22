@@ -1,0 +1,39 @@
+
+│   app.py
+│
+├───static
+│   ├───css
+│   │   │   animate-custom.css
+│   │   │   demo.css
+│   │   │   style.css
+│   │   │   upload.css
+│   │   │
+│   │   └───fonts
+│   │           BebasNeue-webfont.eot
+│   │           BebasNeue-webfont.svg
+│   │           BebasNeue-webfont.ttf
+│   │           BebasNeue-webfont.woff
+│   │           Dharma Type Font License.txt
+│   │           fontomas-webfont.eot
+│   │           fontomas-webfont.svg
+│   │           fontomas-webfont.ttf
+│   │           fontomas-webfont.woff
+│   │           franchise-bold-webfont.eot
+│   │           franchise-bold-webfont.svg
+│   │           franchise-bold-webfont.ttf
+│   │           franchise-bold-webfont.woff
+│   │
+│   └───uploads
+│           False.png
+│           KU.png
+│           True.png
+│
+└───templates
+        certificate.html
+        index.html
+        inquiry.html
+        layout.html
+        registration.html
+        verification.html
+
+

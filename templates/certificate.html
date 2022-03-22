@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+
+				
+                <div id="container_demo" >
+				
+                    <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
+
+                    <div id="wrapper">
+                        <div id="login" class="animate form">
+                            <form  action="{{ url_for('getCertificate') }}" method="post" autocomplete="on"> 
+                                <h1>Certificate Inquiry</h1> 
+
+
+
+                                <p> 
+                                    <label> Certificate number</label>
+                                    <input name="cert_no" required="required" type="text" placeholder="eg. C202104-1" /> 
+                                </p>
+                                
+
+                                                             
+
+                                <p class="login button" style="text-align: center;"> 
+                                    <input type="submit" value="Search" /> 
+								</p>
+
+                            </form>
+		<center>        
+
+        {% if result == 1 %}
+        <div class="container">
+         <a href="http://127.0.0.1:8000/{{filepath}}"><img class="img1" src="{{filepath}}" width="50%"></a>
+        </div>
+        {% elif result == 2  %}
+        <div class="container">
+		<p style="color:red">No certificate exists for this number</p><br>
+        </div>
+  		{% endif %}
+		</center>
+                        </div>
+					 
+
+						
+                    </div>
+                </div>  
+  
+        </div>
+{% endblock %}

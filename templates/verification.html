@@ -1,0 +1,72 @@
+
+{% extends "layout.html" %}
+{% block content %}
+
+				
+                <div id="container_demo" >
+				
+                    
+
+
+
+       
+                    <div id="wrapper">
+                        <div id="login" class="animate form">
+                                <h1>Certificate Verification</h1> 
+<div class="file-upload">
+    <form action="upload_file" method="POST" enctype=multipart/form-data>
+  <button class="file-upload-btn"  type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Certificate</button>
+
+  <div class="image-upload-wrap">
+    <input class="file-upload-input" type='file' name='file' onchange="readURL(this);" accept="image/*" />
+    <div class="drag-text">
+      <h3>Drag and drop a certificate in image format</h3>
+    </div>
+  </div>
+  <div class="file-upload-content">
+    <img class="file-upload-image" src="#" alt="your image" />
+    <div class="image-title-wrap">
+      <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+    </div>
+  </div>
+  <br>
+   <p class="login button" style="text-align: center;"> 
+
+    <input  class="login button" style="background:red"type="submit" value="Verify">
+	</p>
+   </form>
+</div>
+		<center>        
+
+        {% if result.result == 1 and filepath[1]=="True" %}
+        <div class="container">
+		<p >Valid certificate</p><br>
+	    <div><img src="static/uploads/True.png" width="10%" /></div>
+         <a href="http://127.0.0.1:8000/{{filepath[0]}}"><img class="img1" src="{{filepath[0]}}" width="50%"></a>
+        </div>
+        {% elif result.result == 1 and filepath[1]=="False" %}
+        <div class="container">
+		<p >Invalid certificate</p><br>
+	    <div ><img src="static/uploads/False.png" width="10%" /></div>
+         <a href="http://127.0.0.1:8000/{{filepath[0]}}"><img class="img1" src="{{filepath[0]}}" width="50%" ></a>
+        </div>
+        {% elif result.result == 1%}
+        <div class="container">
+		<p >This is not a certificate</p><br>
+         <a href="http://127.0.0.1:8000/{{filepath[0]}}"><img class="img1" src="{{filepath[0]}}" width="50%" ></a>
+        </div>		
+  		{% elif result.result == 0%}
+		<p >{{result.error}}</p>
+  		{% endif %}
+		</center>
+
+                        </div>
+
+
+						
+                    </div>
+
+
+    </div>  
+
+{% endblock %}
