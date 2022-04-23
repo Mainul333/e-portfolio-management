@@ -366,18 +366,18 @@ def Generate_certificate(data,QR):
     path=os.path.join(app.config['UPLOAD_FOLDER'], str(data[0])+'.png')
     back_im.save(path)
 
-    with open(path, 'rb') as file:
-        binaryData = file.read()
-    cur = mysql.connection.cursor()
-    # cur.execute('''CREATE TABLE certificate (cid INTEGER, image LONGBLOB)''')
-    sql_insert_blob_query = """ INSERT INTO certificate
-                          (cid, image) VALUES (%s,%s)"""
-    # Convert data into tuple format
-    insert_blob_tuple = (data[0], binaryData)
-    cur.execute(sql_insert_blob_query, insert_blob_tuple)
-    # cur.execute('''INSERT INTO certificate VALUES (1, image)''')
-    # cur.execute('''INSERT INTO example VALUES (2, 'Billy')''')
-    mysql.connection.commit()
+    # with open(path, 'rb') as file:
+        # binaryData = file.read()
+    # cur = mysql.connection.cursor()
+    # # cur.execute('''CREATE TABLE certificate (cid INTEGER, image LONGBLOB)''')
+    # sql_insert_blob_query = """ INSERT INTO certificate
+                          # (cid, image) VALUES (%s,%s)"""
+    # # Convert data into tuple format
+    # insert_blob_tuple = (data[0], binaryData)
+    # cur.execute(sql_insert_blob_query, insert_blob_tuple)
+    # # cur.execute('''INSERT INTO certificate VALUES (1, image)''')
+    # # cur.execute('''INSERT INTO example VALUES (2, 'Billy')''')
+    # mysql.connection.commit()
 
 
         
