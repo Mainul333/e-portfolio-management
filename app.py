@@ -1,7 +1,3 @@
-
-
-
-
 import os
 from werkzeug.utils import secure_filename
 
@@ -366,18 +362,18 @@ def Generate_certificate(data,QR):
     path=os.path.join(app.config['UPLOAD_FOLDER'], str(data[0])+'.png')
     back_im.save(path)
 
-    with open(path, 'rb') as file:
-        binaryData = file.read()
-    cur = mysql.connection.cursor()
-    # cur.execute('''CREATE TABLE certificate (cid INTEGER, image LONGBLOB)''')
-    sql_insert_blob_query = """ INSERT INTO certificate
-                          (cid, image) VALUES (%s,%s)"""
-    # Convert data into tuple format
-    insert_blob_tuple = (data[0], binaryData)
-    cur.execute(sql_insert_blob_query, insert_blob_tuple)
-    # cur.execute('''INSERT INTO certificate VALUES (1, image)''')
-    # cur.execute('''INSERT INTO example VALUES (2, 'Billy')''')
-    mysql.connection.commit()
+    # with open(path, 'rb') as file:
+        # binaryData = file.read()
+    # cur = mysql.connection.cursor()
+    # # cur.execute('''CREATE TABLE certificate (cid INTEGER, image LONGBLOB)''')
+    # sql_insert_blob_query = """ INSERT INTO certificate
+                          # (cid, image) VALUES (%s,%s)"""
+    # # Convert data into tuple format
+    # insert_blob_tuple = (data[0], binaryData)
+    # cur.execute(sql_insert_blob_query, insert_blob_tuple)
+    # # cur.execute('''INSERT INTO certificate VALUES (1, image)''')
+    # # cur.execute('''INSERT INTO example VALUES (2, 'Billy')''')
+    # mysql.connection.commit()
 
 
         
@@ -499,11 +495,11 @@ UPLOAD_FOLDER = 'static/uploads/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'log'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.config['MYSQL_USER'] = 'admin'
-app.config['MYSQL_PASSWORD'] = 'hancomwith12!@'
-app.config['MYSQL_HOST'] = '1.237.174.101'
-app.config['MYSQL_DB'] = 'ricardian'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+# app.config['MYSQL_USER'] = 'admin'
+# app.config['MYSQL_PASSWORD'] = ''
+# app.config['MYSQL_HOST'] = ''
+# app.config['MYSQL_DB'] = ''
+# app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 @app.route('/',methods=['GET', 'POST'])
@@ -602,13 +598,13 @@ def upload_file():
     return render_template('verification.html', result=result)
 
 # Set up web3 connection with Quorum
-quorum_url = "http://163.152.161.203:7545"
+quorum_url = "http://127.0.0.1:7545"
 web3 = Web3(Web3.HTTPProvider(quorum_url))
 web3.middleware_onion.inject(geth_poa_middleware, layer=0)
 # # set pre-funded account as sender
-web3.eth.defaultAccount = Web3.toChecksumAddress('0x0b36b1E560E90b96f2e6E6bdd77c1bE2e9Ab90E9')
+web3.eth.defaultAccount = Web3.toChecksumAddress('0x0f0d4bdCA427841d1038F20A297A571961716d65')
 print(web3.isConnected())
-private_key=hex2int("bfeb34154e07a6ffd7f56b16250f6a9942ada6a472ee841e6621872406637142")
+private_key=hex2int("569755f14d731d6f865257951216b7fa7bb66393868336483f6af30091a7c530")
 public_key=bytes.fromhex(compress_public_key(ECPM(private_key)))
 def deployPortfolioManager():
     abi=json.loads('[{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"_pf_no","type":"string"},{"indexed":false,"internalType":"string","name":"_reg_name","type":"string"},{"indexed":false,"internalType":"string","name":"_professor_name","type":"string"}],"name":"newPortfolioCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"_cert_no","type":"string"},{"indexed":false,"internalType":"string","name":"_pf_no","type":"string"},{"indexed":false,"internalType":"string","name":"_reg_name","type":"string"},{"indexed":false,"internalType":"string","name":"_professor_name","type":"string"},{"indexed":false,"internalType":"uint256","name":"_score","type":"uint256"}],"name":"pf_CertificateIssued","type":"event"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"PortfolioList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"countPortfolio","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_pf_no","type":"string"}],"name":"getPortfolioInfo","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"bytes","name":"","type":"bytes"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_pf_no","type":"string"}],"name":"getPortfolioStatus","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_pf_no","type":"string"}],"name":"getPortfolioURL","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_pf_no","type":"string"},{"internalType":"string","name":"_pf_name","type":"string"},{"internalType":"string","name":"_reg_dtime","type":"string"},{"internalType":"string","name":"_reg_name","type":"string"},{"internalType":"string","name":"_professor_name","type":"string"},{"internalType":"bytes","name":"_professor_pk","type":"bytes"},{"internalType":"uint256","name":"_score","type":"uint256"},{"internalType":"string","name":"_pf_status","type":"string"},{"internalType":"string","name":"_pf_url","type":"string"}],"name":"newPortfolio","outputs":[],"stateMutability":"nonpayable","type":"function"}]');
@@ -632,13 +628,13 @@ def deployCertificateManager():
     print("Certificate is deployed at: ",tx_receipt.contractAddress)
 # # Create the contract instance with the newly-deployed address
 contract1 = web3.eth.contract(
-    address=Web3.toChecksumAddress('0x635BD9A5145489DD58dC724f499C5A972456Ee93'),
+    address=Web3.toChecksumAddress('0x554ea14FFF175D80841226503F9079E1fEF0569C'),
     abi=json.loads('[{"anonymous":false,"name":"newPortfolioCreated","inputs":[{"indexed":false,"name":"_pf_no","type":"string","internalType":"string"},{"indexed":false,"name":"_reg_name","type":"string","internalType":"string"},{"indexed":false,"name":"_professor_name","type":"string","internalType":"string"}],"type":"event","payable":false},{"anonymous":false,"name":"pf_CertificateIssued","inputs":[{"indexed":false,"name":"_cert_no","type":"string","internalType":"string"},{"indexed":false,"name":"_pf_no","type":"string","internalType":"string"},{"indexed":false,"name":"_reg_name","type":"string","internalType":"string"},{"indexed":false,"name":"_professor_name","type":"string","internalType":"string"},{"indexed":false,"name":"_score","type":"uint256","internalType":"uint256"}],"type":"event","payable":false},{"constant":true,"name":"PortfolioList","inputs":[{"name":"","type":"uint256","internalType":"uint256"}],"outputs":[{"name":"","type":"string","internalType":"string"}],"type":"function","payable":false,"stateMutability":"view"},{"constant":true,"name":"countPortfolio","inputs":[],"outputs":[{"name":"","type":"uint256","internalType":"uint256"}],"type":"function","payable":false,"stateMutability":"view"},{"constant":true,"name":"getPortfolioStatus","inputs":[{"name":"_pf_no","type":"string","internalType":"string"}],"outputs":[{"name":"","type":"string","internalType":"string"}],"type":"function","payable":false,"stateMutability":"view"},{"constant":true,"name":"getPortfolioInfo","inputs":[{"name":"_pf_no","type":"string","internalType":"string"}],"outputs":[{"name":"","type":"string","internalType":"string"},{"name":"","type":"string","internalType":"string"},{"name":"","type":"string","internalType":"string"},{"name":"","type":"string","internalType":"string"},{"name":"","type":"string","internalType":"string"},{"name":"","type":"bytes","internalType":"bytes"},{"name":"","type":"uint256","internalType":"uint256"}],"type":"function","payable":false,"stateMutability":"view"},{"constant":true,"name":"getPortfolioURL","inputs":[{"name":"_pf_no","type":"string","internalType":"string"}],"outputs":[{"name":"","type":"string","internalType":"string"}],"type":"function","payable":false,"stateMutability":"view"},{"constant":false,"name":"newPortfolio","inputs":[{"name":"_pf_no","type":"string","internalType":"string"},{"name":"_pf_name","type":"string","internalType":"string"},{"name":"_reg_dtime","type":"string","internalType":"string"},{"name":"_reg_name","type":"string","internalType":"string"},{"name":"_professor_name","type":"string","internalType":"string"},{"name":"_professor_pk","type":"bytes","internalType":"bytes"},{"name":"_score","type":"uint256","internalType":"uint256"},{"name":"_pf_status","type":"string","internalType":"string"},{"name":"_pf_url","type":"string","internalType":"string"}],"outputs":[],"type":"function","payable":false,"stateMutability":"nonpayable"}]'),
 )
 
 # # Create the contract instance with the newly-deployed address
 contract2 = web3.eth.contract(
-    address=Web3.toChecksumAddress('0x448871fDf12e65504af8A8da40efc000E12174e0'),
+    address=Web3.toChecksumAddress('0x3190fa19c6719417765C371897978a0ad381Fc9f'),
     abi=json.loads('[{"anonymous":false,"name":"pf_CertificateIssued","inputs":[{"indexed":false,"name":"_cert_no","type":"string","internalType":"string"},{"indexed":false,"name":"_pf_no","type":"string","internalType":"string"},{"indexed":false,"name":"_professor_pk","type":"bytes","internalType":"bytes"},{"indexed":false,"name":"_cert_signature","type":"bytes","internalType":"bytes"}],"type":"event","payable":false},{"constant":true,"name":"Portfolio_eCertList","inputs":[{"name":"","type":"uint256","internalType":"uint256"}],"outputs":[{"name":"","type":"string","internalType":"string"}],"type":"function","payable":false,"stateMutability":"view"},{"constant":true,"name":"countPortfolioCerts","inputs":[],"outputs":[{"name":"","type":"uint256","internalType":"uint256"}],"type":"function","payable":false,"stateMutability":"view"},{"constant":true,"name":"getCertificateInfo","inputs":[{"name":"_cert_no","type":"string","internalType":"string"}],"outputs":[{"name":"","type":"string","internalType":"string"},{"name":"","type":"string","internalType":"string"},{"name":"","type":"bytes","internalType":"bytes"},{"name":"","type":"bytes","internalType":"bytes"},{"name":"","type":"bytes","internalType":"bytes"}],"type":"function","payable":false,"stateMutability":"view"},{"constant":false,"name":"issuePortfolioCertificate","inputs":[{"name":"_cert_no","type":"string","internalType":"string"},{"name":"_pf_no","type":"string","internalType":"string"},{"name":"_organizationID","type":"string","internalType":"string"},{"name":"_pf_hash","type":"bytes","internalType":"bytes"},{"name":"_cert_signature","type":"bytes","internalType":"bytes"},{"name":"_professor_pk","type":"bytes","internalType":"bytes"}],"outputs":[],"type":"function","payable":false,"stateMutability":"nonpayable"}]'),
 )
 
@@ -746,6 +742,8 @@ class Struct2(NamedTuple):
 
 
 if __name__ == '__main__':
+    # deployPortfolioManager()
+    # deployCertificateManager()
     host = os.environ.get('IP', '0.0.0.0')
     port = int(os.environ.get('PORT', 8000))
     
