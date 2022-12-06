@@ -602,13 +602,13 @@ def upload_file():
     return render_template('verification.html', result=result)
 
 # Set up web3 connection with Quorum
-quorum_url = "http://163.152.161.203:7545"
+quorum_url = "http://127.0.01:7545"
 web3 = Web3(Web3.HTTPProvider(quorum_url))
 web3.middleware_onion.inject(geth_poa_middleware, layer=0)
 # # set pre-funded account as sender
-web3.eth.defaultAccount = Web3.toChecksumAddress('0x0b36b1E560E90b96f2e6E6bdd77c1bE2e9Ab90E9')
+web3.eth.defaultAccount = Web3.toChecksumAddress('0x83561AeE1D02960d73B5B799888d1BE90501609d')
 print(web3.isConnected())
-private_key=hex2int("bfeb34154e07a6ffd7f56b16250f6a9942ada6a472ee841e6621872406637142")
+private_key=hex2int("e9b78cb9c1e40b947414a95c0a8dab77dbc0f4be25f5493984f78b29b1bf157d")
 public_key=bytes.fromhex(compress_public_key(ECPM(private_key)))
 def deployPortfolioManager():
     abi=json.loads('[{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"_pf_no","type":"string"},{"indexed":false,"internalType":"string","name":"_reg_name","type":"string"},{"indexed":false,"internalType":"string","name":"_professor_name","type":"string"}],"name":"newPortfolioCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"_cert_no","type":"string"},{"indexed":false,"internalType":"string","name":"_pf_no","type":"string"},{"indexed":false,"internalType":"string","name":"_reg_name","type":"string"},{"indexed":false,"internalType":"string","name":"_professor_name","type":"string"},{"indexed":false,"internalType":"uint256","name":"_score","type":"uint256"}],"name":"pf_CertificateIssued","type":"event"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"PortfolioList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"countPortfolio","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_pf_no","type":"string"}],"name":"getPortfolioInfo","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"bytes","name":"","type":"bytes"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_pf_no","type":"string"}],"name":"getPortfolioStatus","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_pf_no","type":"string"}],"name":"getPortfolioURL","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_pf_no","type":"string"},{"internalType":"string","name":"_pf_name","type":"string"},{"internalType":"string","name":"_reg_dtime","type":"string"},{"internalType":"string","name":"_reg_name","type":"string"},{"internalType":"string","name":"_professor_name","type":"string"},{"internalType":"bytes","name":"_professor_pk","type":"bytes"},{"internalType":"uint256","name":"_score","type":"uint256"},{"internalType":"string","name":"_pf_status","type":"string"},{"internalType":"string","name":"_pf_url","type":"string"}],"name":"newPortfolio","outputs":[],"stateMutability":"nonpayable","type":"function"}]');
@@ -746,6 +746,9 @@ class Struct2(NamedTuple):
 
 
 if __name__ == '__main__':
+    deployPortfolioManager()
+    deployCertificateManager()
+
     host = os.environ.get('IP', '0.0.0.0')
     port = int(os.environ.get('PORT', 8000))
     
