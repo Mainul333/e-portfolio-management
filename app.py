@@ -752,14 +752,8 @@ class Struct2(NamedTuple):
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     # deployPortfolioManager()
     # deployCertificateManager()
-=======
-    deployPortfolioManager()
-    deployCertificateManager()
-
->>>>>>> dbfc3e66660a0f3314ec89def8642bbc13c28558
     host = os.environ.get('IP', '0.0.0.0')
     port = int(os.environ.get('PORT', 8000))
     
